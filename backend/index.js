@@ -19,7 +19,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/sweets', sweetsRouter);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
+
 mongoose.connect(process.env.MONGO_URI)
 .then(()=> app.listen(PORT, ()=> console.log('Server running on', PORT)))
 .catch(err => console.error(err));
