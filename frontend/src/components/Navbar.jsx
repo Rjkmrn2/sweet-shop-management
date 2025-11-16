@@ -1,12 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
 export default function Navbar({ onLogin, onSignup }) {
+  const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("token");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();  // Refresh UI
+    navigate("/login");
   };
 
   return (
@@ -18,29 +19,20 @@ export default function Navbar({ onLogin, onSignup }) {
           Sweet Shop
         </NavLink>
 
-        <NavLink to="/sweet-shop/add" className="hover:text-pink-600">
-          Add Sweet
-        </NavLink>
-
         <NavLink to="/profile" className="hover:text-pink-600">
           Profile
         </NavLink>
 
-        {/* If NOT logged in → Show Login / Signup */}
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <>
             <button onClick={onLogin} className="hover:text-pink-600">
               Login
             </button>
-
             <button onClick={onSignup} className="hover:text-pink-600">
               Signup
             </button>
           </>
-        )}
-
-        {/* If logged in → Show Logout */}
-        {isLoggedIn && (
+        ) : (
           <button
             onClick={handleLogout}
             className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
